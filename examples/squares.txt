@@ -1,0 +1,11 @@
+define square(side) {
+  pen(1) repeat(4) { forward(side) right(90) } pen(0)
+}
+
+define row() {
+  repeat(4) { square(114) forward(163) }
+  forward(-652) right(90) forward(163) left(90)
+}
+
+forward(301) left(90) forward(301) right(180)
+repeat(4) { row() }

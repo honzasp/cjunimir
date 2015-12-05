@@ -1,0 +1,9 @@
+define tree(n) {
+  if(n) {
+    forward(40+20*n)
+    split { left(5+3*n) tree(n-1) }
+    right(5+3*n) tree(n-1)
+  }
+}
+
+forward(-250) pen(1) tree(5)

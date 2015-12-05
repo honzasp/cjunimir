@@ -1,0 +1,22 @@
+define dragon(n,sign) {
+  if(n) {
+    dragon(n-1,1)
+    quadrant(-sign)
+    dragon(n-1,-1)
+  }
+}
+
+define quadrant(sign) {
+  forward(1)
+  right(45*sign)
+  forward(2)
+  right(45*sign)
+  forward(1)
+}
+
+left(90) forward(141)
+left(90) forward(83)
+right(100)
+pen(1)
+dragon(13,1)
+

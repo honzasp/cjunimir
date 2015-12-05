@@ -1,0 +1,28 @@
+define gosperA(n) {
+  if(n) {
+    right(19)  gosperA(n-1)
+    left(60)   gosperB(n-1)
+    left(120)  gosperB(n-1)
+    right(60)  gosperA(n-1)
+    right(120) gosperA(n-1) gosperA(n-1)
+    right(60)  gosperB(n-1)
+    left(79)
+  }
+  if(1-n) { forward(4) }
+}
+
+define gosperB(n) {
+  if(n) {
+    right(79)  gosperA(n-1)
+    left(60)   gosperB(n-1) gosperB(n-1)
+    left(120)  gosperB(n-1)
+    left(60)   gosperA(n-1)
+    right(120) gosperA(n-1)
+    right(60)  gosperB(n-1)
+    left(19)
+  }
+  if(1-n) { forward(4) }
+}
+
+left(19) forward(-250) right(30)
+pen(1) gosperA(5)

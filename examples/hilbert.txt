@@ -1,0 +1,17 @@
+define hilbert(n,side) {
+  left(90*side)
+  if(n) {
+    hilbert(n-1,-side)
+    left(90*side) forward(10)
+    hilbert(n-1,side)
+    right(90*side) forward(10) right(90*side)
+    hilbert(n-1,side)
+    forward(10) left(90*side)
+    hilbert(n-1,-side)
+  }
+  left(90*side)
+}
+
+forward(310) right(90)
+forward(310) right(90)
+pen(1) hilbert(6,-1)

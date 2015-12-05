@@ -1,0 +1,14 @@
+define koch(n) {
+  if(n) {
+    koch(n-1)
+    left(60) koch(n-1)
+    right(120) koch(n-1)
+    left(60) koch(n-1)
+  }
+  if(1-n) {
+    forward(2)
+  }
+}
+
+pen(0) forward(-175) left(90) forward(250) right(120)
+pen(1) koch(5) right(120) koch(5) right(120) koch(5)

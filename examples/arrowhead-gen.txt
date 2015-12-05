@@ -1,0 +1,24 @@
+define arrowhead(n,side,step) {
+  if(n) {
+    left(60*side)
+    arrowhead(n-1,-side,step)
+    right(60*side)
+    arrowhead(n-1,side,step)
+    right(60*side)
+    arrowhead(n-1,-side,step)
+    left(60*side)
+  }
+  if(1-n) { forward(step) }
+}
+
+right(90)
+forward(-300)
+pen(1) arrowhead(1,1,20) pen(0)
+forward(20)
+pen(1) arrowhead(2,1,15) pen(0)
+forward(20)
+pen(1) arrowhead(3,1,10) pen(0)
+forward(20)
+pen(1) arrowhead(4,1,8) pen(0)
+forward(20)
+pen(1) arrowhead(5,1,5) pen(0)

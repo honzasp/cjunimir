@@ -1,0 +1,26 @@
+define hilbert(n,side,step) {
+  left(90*side)
+  if(n) {
+    hilbert(n-1,-side,step)
+    left(90*side) forward(step)
+    hilbert(n-1,side,step)
+    right(90*side) forward(step) right(90*side)
+    hilbert(n-1,side,step)
+    forward(step) left(90*side)
+    hilbert(n-1,-side,step)
+  }
+  left(90*side)
+}
+
+left(90)
+forward(300)
+right(90)
+forward(200)
+
+split { forward(15) pen(1) hilbert(1,-1,30) }
+right(90)forward(60)left(90)
+split { forward(0) pen(1) hilbert(2,-1,20) }
+right(90)forward(90)left(90)
+split { forward(-22) pen(1) hilbert(3,-1,15) }
+right(90)forward(135)left(90)
+split { forward(-45) pen(1) hilbert(4,-1,10) }
