@@ -40,7 +40,7 @@
 (defn left-assoc [op expr]
   (p/let->> [head expr
              tail (p/many (p/attempt ($> op expr vector)))]
-    (let [f (fn [left [op right]] (list op left right))
+    (let [f (fn [left [op right]] (vector op left right))
           tree (reduce f head tail)]
       (p/always tree))))
 
@@ -83,14 +83,14 @@
 (declare expr)
 
 (p/defparser integer-expr []
-  ($> (integer) #(list :int %)))
+  ($> (integer) #(vector :int %)))
 (p/defparser var-expr []
-  ($> (ident) #(list :var %)))
+  ($> (ident) #(vector :var %)))
 (p/defparser atom-expr []
   (p/choice (integer-expr) (var-expr) (parens (expr))))
 
 (p/defparser neg-expr []
-  (p/choice ($> (p/attempt (neg-op)) (atom-expr) #(list %1 %2))
+  (p/choice ($> (p/attempt (neg-op)) (atom-expr) #(vector %1 %2))
             (atom-expr)))
 (p/defparser mul-expr []
   (left-assoc (mul-op) (neg-expr)))
@@ -101,16 +101,16 @@
 (declare stmt)
 
 (p/defparser braces-stmts []
-  (braces (p/many (stmt))))
+  ($> (braces (p/many (stmt))) vec))
 
 (p/defparser proc-stmt []
-  ($> (ident) (parens (sep-by (expr) (comma))) #(list :proc %1 %2)))
+  ($> (ident) (parens (sep-by (expr) (comma))) #(vector :proc %1 (vec %2))))
 (p/defparser repeat-stmt []
-  ($> (special-ident "repeat") (parens (expr)) (braces-stmts) #(list :repeat %2 %3)))
+  ($> (special-ident "repeat") (parens (expr)) (braces-stmts) #(vector :repeat %2 %3)))
 (p/defparser if-stmt []
-  ($> (special-ident "if") (parens (expr)) (braces-stmts) #(list :if %2 %3)))
+  ($> (special-ident "if") (parens (expr)) (braces-stmts) #(vector :if %2 %3)))
 (p/defparser split-stmt []
-  ($> (special-ident "split") (braces-stmts) #(list :split %2)))
+  ($> (special-ident "split") (braces-stmts) #(vector :split %2)))
 (p/defparser stmt []
   (p/choice (repeat-stmt) (if-stmt) (split-stmt) (proc-stmt)))
 
@@ -119,7 +119,7 @@
       (ident)
       (parens (sep-by (ident) (comma)))
       (braces-stmts)
-      #(list :define %2 %3 %4)))
+      #(vector :define %2 (vec %3) %4)))
 (p/defparser top-stmt []
   (p/choice (define-top-stmt) (stmt)))
 (p/defparser program []

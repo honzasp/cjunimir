@@ -1,12 +1,19 @@
 (ns cjunimir.core
   (:require [cjunimir.parse :as parse]
+            [cjunimir.eval :as eval]
             [clojure.java.io :as io])
   (:gen-class))
 
+(defn slurp-program [argv]
+  (let [stream (if (>= (count argv) 1)
+                 (java.io.File. (get argv 0))
+                 *in*)]
+    (with-open [input (io/reader stream)]
+      (slurp input))))
+
 (defn -main [& args]
-  (let [args-vec (vec args)]
-    (with-open [input (io/reader
-                (if (>= (count args-vec) 1) 
-                  (java.io.File. (get args-vec 0))
-                  *in*))]
-      (prn (parse/parse (slurp input))))))
+  (let [argv (vec args)
+        program (parse/parse (slurp-program argv))
+        segments (eval/eval-program program)]
+    (doseq [segment segments]
+      (prn segment))))
