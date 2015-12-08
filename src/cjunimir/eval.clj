@@ -59,9 +59,11 @@
           y-shift (* (- distance) (Math/cos angle-rad))
           x1 (:x turtle) y1 (:y turtle)
           x2 (+ x1 x-shift) y2 (+ y1 y-shift)
-          next-turtle (assoc turtle :x x2 :y y2)]
+          next-turtle (assoc turtle :x x2 :y y2)
+          coord #(/ (Math/round (* 32.0 %)) 32.0)]
       (if (pos? (:width (:pen turtle)))
-        (let [segment (Segment. (:pen turtle) (int x1) (int y1) (int x2) (int y2))]
+        (let [segment (Segment. (:pen turtle) (coord x1) (coord y1) 
+                                (coord x2) (coord y2))]
           [:segment segment (cont next-turtle)])
         (cont next-turtle)))
     [:error "forward() must be called with one argument"]))

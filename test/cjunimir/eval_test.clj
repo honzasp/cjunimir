@@ -11,34 +11,34 @@
 
 (deftest eval-primitives
   (are-evaluated
-    [(->Segment black 0 0 0 -10)]
+    [(->Segment black 0.0 0.0 0.0 -10.0)]
     '[[:proc "pen" [[:int 1]]]
       [:proc "forward" [[:int 10]]]]
 
-    [(->Segment black 0 0 10 0)
-     (->Segment black 10 0 10 -10)]
+    [(->Segment black 0.0 0.0 10.0 0.0)
+     (->Segment black 10.0 0.0 10.0 -10.0)]
     '[[:proc "right" [[:int 90]]]
       [:proc "pen" [[:int 1]]]
       [:proc "forward" [[:int 10]]]
       [:proc "left" [[:int 90]]]
       [:proc "forward" [[:int 10]]]]
 
-    [(->Segment (->Pen 10 255 0 100) 0 0 0 -10)]
+    [(->Segment (->Pen 10 255 0 100) 0.0 0.0 0.0 -10.0)]
     '[[:proc "pen" [[:int 10]]]
       [:proc "color" [[:int 255] [:int 0] [:int 100]]]
       [:proc "forward" [[:int 10]]]]))
 
 (deftest eval-expressions
   (are-evaluated
-    [(->Segment black 0 0 0 -42)]
+    [(->Segment black 0.0 0.0 0.0 -42.0)]
     '[[:proc "pen" [[:int 1]]]
       [:proc "forward" 
             [[:mul [:int 2] [:add [:int 20] [:int 1]]]]]]))
 
 (deftest eval-procedures
   (are-evaluated
-    [(->Segment black 0 0 0 -10)
-     (->Segment black 0 -10 20 -10)]
+    [(->Segment black 0.0 0.0 0.0 -10.0)
+     (->Segment black 0.0 -10.0 20.0 -10.0)]
     '[[:define "line" ["length"]
               [[:proc "forward" [[:var "length"]]]
                 [:proc "right" [[:int 90]]]]]
@@ -48,16 +48,16 @@
 
 (deftest eval-repeat-statements
   (are-evaluated
-    [(->Segment black 0 0 0 -2)
-     (->Segment black 0 -2 0 -4)
-     (->Segment black 0 -4 0 -6)]
+    [(->Segment black 0.0 0.0 0.0 -2.0)
+     (->Segment black 0.0 -2.0 0.0 -4.0)
+     (->Segment black 0.0 -4.0 0.0 -6.0)]
     '[[:proc "pen" [[:int 1]]]
       [:repeat [:int 3]
                [[:proc "forward" [[:int 2]]]]]]))
 
 (deftest eval-if-statemets
   (are-evaluated
-    [(->Segment black 0 0 0 -5)]
+    [(->Segment black 0.0 0.0 0.0 -5.0)]
     '[[:proc "pen" [[:int 1]]]
       [:if [:int -2] [[:proc "forward" [[:int 8]]]]]
       [:if [:int 2] [[:proc "forward" [[:int 5]]]]]
@@ -65,10 +65,10 @@
 
 (deftest eval-split-statemets
   (are-evaluated
-    [(->Segment black 0 0    0 -10)
-     (->Segment red   0 -10 -15 -10)
-     (->Segment black 0 -10  12 -10)
-     (->Segment black 12 -10 25 -10)]
+    [(->Segment black 0.0 0.0    0.0 -10.0)
+     (->Segment red   0.0 -10.0 -15.0 -10.0)
+     (->Segment black 0.0 -10.0  12.0 -10.0)
+     (->Segment black 12.0 -10.0 25.0 -10.0)]
     '[[:proc "pen" [[:int 1]]]
       [:proc "forward" [[:int 10]]]
       [:split

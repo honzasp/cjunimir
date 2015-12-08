@@ -1,6 +1,7 @@
 (ns cjunimir.core
   (:require [cjunimir.parse :as parse]
             [cjunimir.eval :as eval]
+            [cjunimir.render :as render]
             [clojure.java.io :as io])
   (:gen-class))
 
@@ -15,5 +16,4 @@
   (let [argv (vec args)
         program (parse/parse (slurp-program argv))
         segments (eval/eval-program program)]
-    (doseq [segment segments]
-      (prn segment))))
+    (render/render-svg *out* segments)))
