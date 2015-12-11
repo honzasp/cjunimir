@@ -1,4 +1,4 @@
-pen(1)
+pen(4)
 forward(200) right(90)
 forward(200) right(90)
 forward(200) right(90)
